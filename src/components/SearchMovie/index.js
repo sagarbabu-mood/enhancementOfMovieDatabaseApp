@@ -32,7 +32,6 @@ class SearchMovie extends Component {
     const {match} = this.props
     const {params} = match
     const {name} = params
-    console.log(name)
     this.setState({apiStatus: apiStatusConstants.inProgress})
     const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=8b580ca1ed146c7c7119a81c16859d0f&language=en-US&query=${name}&page=1`
     const response = await fetch(apiUrl)
@@ -66,10 +65,12 @@ class SearchMovie extends Component {
     const {list} = this.state
 
     return (
-      <div className="homePage">
-        {list.map(each => (
-          <MovieItem key={each.id} data={each} />
-        ))}
+      <div className="homePage1">
+        <div className="homePage">
+          {list.map(each => (
+            <MovieItem key={each.id} data={each} />
+          ))}
+        </div>
       </div>
     )
   }

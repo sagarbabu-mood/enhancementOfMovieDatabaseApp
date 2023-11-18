@@ -13,7 +13,7 @@ const apiStatusConstants = {
 }
 
 class TopMovies extends Component {
-  state = {apiStatus: apiStatusConstants.initial, list: []}
+  state = {apiStatus: apiStatusConstants.initial, list: [], page: 1}
 
   componentDidMount() {
     this.getData()
@@ -30,8 +30,9 @@ class TopMovies extends Component {
   }
 
   getData = async () => {
+    const {page} = this.state
     this.setState({apiStatus: apiStatusConstants.inProgress})
-    const apiUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=8b580ca1ed146c7c7119a81c16859d0f&language=en-US&page=1`
+    const apiUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=8b580ca1ed146c7c7119a81c16859d0f&language=en-US&page=${page}`
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()
@@ -39,6 +40,17 @@ class TopMovies extends Component {
       this.setState({apiStatus: apiStatusConstants.success, list: updatedData})
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
+  nextButton = () => {
+    this.setState(prevState => ({page: prevState.page + 1}), this.getData)
+  }
+
+  prevButton = () => {
+    const {page} = this.state
+    if (page > 1) {
+      this.setState(prevState => ({page: prevState.page - 1}), this.getData)
     }
   }
 
@@ -60,13 +72,24 @@ class TopMovies extends Component {
   )
 
   displayView = () => {
-    const {list} = this.state
+    const {list, page} = this.state
 
     return (
-      <div className="homePage">
-        {list.map(each => (
-          <MovieItem key={each.id} data={each} />
-        ))}
+      <div className="homePage1">
+        <div className="buttons-container">
+          <button type="button" className="button" onClick={this.prevButton}>
+            Prev
+          </button>
+          <p className="para">{page}</p>
+          <button type="button" className="button" onClick={this.nextButton}>
+            Next
+          </button>
+        </div>
+        <div className="homePage">
+          {list.map(each => (
+            <MovieItem key={each.id} data={each} />
+          ))}
+        </div>
       </div>
     )
   }
