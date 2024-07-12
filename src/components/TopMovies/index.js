@@ -72,19 +72,10 @@ class TopMovies extends Component {
   )
 
   displayView = () => {
-    const {list, page} = this.state
+    const {list} = this.state
 
     return (
       <div className="homePage1">
-        <div className="buttons-container">
-          <button type="button" className="button" onClick={this.prevButton}>
-            Prev
-          </button>
-          <p className="para">{page}</p>
-          <button type="button" className="button" onClick={this.nextButton}>
-            Next
-          </button>
-        </div>
         <div className="homePage">
           {list.map(each => (
             <MovieItem key={each.id} data={each} />
@@ -110,7 +101,21 @@ class TopMovies extends Component {
   }
 
   render() {
-    return <div className="main-container">{this.renderDataDetails()}</div>
+    const {page} = this.state
+    return (
+      <div className="main-container">
+        <div className="buttons-container">
+          <button type="button" className="button" onClick={this.prevButton}>
+            Prev
+          </button>
+          <p className="para">{page}</p>
+          <button type="button" className="button" onClick={this.nextButton}>
+            Next
+          </button>
+        </div>
+        {this.renderDataDetails()}
+      </div>
+    )
   }
 }
 

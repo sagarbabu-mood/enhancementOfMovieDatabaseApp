@@ -8,7 +8,7 @@ const MovieItem = props => {
   return (
     <div className="card">
       <img className="poster" src={url} alt={title} />
-      <p>{title}</p>
+      <h1>{title}</h1>
       <p>{voteAverage}</p>
       <Link to={`/single-movie/${id}`}>
         <button className="details-button" type="button">

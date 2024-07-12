@@ -20,7 +20,7 @@ class Header extends Component {
           <div>
             <input
               className="search-bar"
-              type="search"
+              type="text"
               value={data}
               onChange={this.updateData}
             />
